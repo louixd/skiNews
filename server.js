@@ -32,3 +32,14 @@ app.post("/articles", (req, res) => {
   articles.push(nouveau);                       // on ajoute au tableau
   res.status(201).json(nouveau);                // 201 = cree
 });
+
+// DELETE /produits/2 -> supprime le produit n 2
+app.delete("/articles/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const index = articles.findIndex((p) => p.id === id);
+  if (index === -1) {                           // -1 = pas trouve
+    return res.status(404).json({ erreur: "article introuvable" });
+  }
+  articles.splice(index, 1);                    // retire 1 element a cette position
+  res.status(200).json({ message: "article supprime" });
+});
